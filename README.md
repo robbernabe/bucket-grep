@@ -26,4 +26,4 @@ Now run the script and supply the path to the file containing search terms, one 
 ./grucket.sh search_terms.txt
 ```
 
-`grucket` will recursively search all files in the bucket matching the search term.
+`grucket` will recursively search all files in the bucket whose name begins with `FILE_PREFIX` and return all matches.
