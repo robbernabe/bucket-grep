@@ -16,6 +16,8 @@ First, set the proper environment variables required by the script:
 ```
 export BUCKET=my_bucket
 export FILE_PREFIX=my_file_prefix
+export AWS_ACCESS_KEY_ID=xxxx
+export AWS_SECRET_ACCESS_KEY=xxxx
 ```
 
 Now run the script and supply the search term:
