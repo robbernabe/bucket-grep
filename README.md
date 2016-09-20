@@ -20,10 +20,10 @@ export AWS_ACCESS_KEY_ID=xxxx
 export AWS_SECRET_ACCESS_KEY=xxxx
 ```
 
-Now run the script and supply the search term:
+Now run the script and supply the path to the file containing search terms, one per line:
 
 ```
-./grucket.sh find_me
+./grucket.sh search_terms.txt
 ```
 
 `grucket` will recursively search all files in the bucket matching the search term.
