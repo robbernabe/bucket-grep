@@ -2,6 +2,8 @@
 
 > Seek and ye shall find.
 
+`Gr`ep an s3 b`ucket`.
+
 Search for strings in files located in an S3 bucket.
 
 ## Requirements
