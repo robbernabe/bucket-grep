@@ -1,18 +1,27 @@
 #!/usr/bin/env bash
 
-set -e
-
 trap ctrl_c INT
 
-GREP_TERM=${1}
+SEARCH_TERMS="${1}"
 
 function ctrl_c() {
     echo "Exiting due to CTRL-C"
 }
 
 function main() {
-    for s3_file in $(aws s3 ls s3://${BUCKET}/ --recursive | grep "${FILE_PREFIX}" | awk '{print $4}'); do
-        aws s3 cp s3://${BUCKET}/$s3_file - | bunzip2 | xmllint --format - | grep "${GREP_TERM}"
+    FILES_TO_SEARCH=$(aws s3 ls s3://${BUCKET}/ --recursive | grep "${FILE_PREFIX}" | awk '{print $4}')
+    for s3_file in ${FILES_TO_SEARCH}; do
+        echo -n "Processing file: $s3_file "
+        MATCHES=$(aws s3 cp s3://${BUCKET}/$s3_file - | bunzip2 | xmllint --format - | grep -o -f "${SEARCH_TERMS}" 2> /dev/null)
+        if [[ $? -eq 0 ]]; then
+            echo "[ MATCHES FOUND ]"
+            echo ""
+            printf '    %s\n' $MATCHES
+            echo ""
+            continue
+        else
+            echo "[ NO MATCHES FOUND ]"
+        fi
     done
 }
 
@@ -24,3 +33,5 @@ elif [ $# -eq 0 ]; then
 else
     main
 fi
+
+exit 0
